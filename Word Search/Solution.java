@@ -1,3 +1,4 @@
+@@ -0,0 +1,102 @@
 class Solution {
 	public static void main(String[] args) {
 		char board[][] = {{'A','B','C','E'},{'S','F','C','S'},{'A','D','E','E'}};
@@ -22,7 +23,7 @@ class Solution {
 			for (int j = 0; j < board[i].length; j++) {
 				if (word.charAt(pos[0]) == board[i][j]){
 					pos[0]++;
-					boolean ans = solveRecur(board,word, pos, i, j, "DEFAULT");
+					boolean ans = solveRecur(board,word, pos, i, j);
 
 					if(ans == true){
 						return true;
@@ -33,17 +34,17 @@ class Solution {
 		}
 		return false;
     }
-	private static boolean solveRecur(char[][] board, String word, int[] pos, int i, int j, String prev) {
+	private static boolean solveRecur(char[][] board, String word, int[] pos, int i, int j) {
 		if (word.length() == pos[0]){
 			return true;
 		}
 		boolean ans = false;
 		int original = pos[0];
 		//Try upwards first
-		if (dimensions(i-1, j, board.length, board[0].length) == true && prev != "DOWN"){
+		if (dimensions(i-1, j, board.length, board[0].length) == true){
 			if (board[i-1][j] == word.charAt(pos[0])){
 				pos[0]++;
-				ans = solveRecur(board,word, pos, i - 1, j, "UP");
+				ans = solveRecur(board,word, pos, i - 1, j);
 			}
 		}
 		if (ans == true){
@@ -52,10 +53,10 @@ class Solution {
 		ans = false;
 		pos[0] = original;
 		//Try to the right
-		if (dimensions(i, j+1, board.length, board[0].length) == true && prev != "LEFT"){
+		if (dimensions(i, j+1, board.length, board[0].length) == true){
 			if (board[i][j+1] == word.charAt(pos[0])){
 				pos[0]++;
-				ans = solveRecur(board,word, pos, i, j+1, "RIGHT");
+				ans = solveRecur(board,word, pos, i, j+1);
 			}
 		}
 
@@ -66,10 +67,10 @@ class Solution {
 		pos[0] = original;
 
 		//Try downwards
-		if (dimensions(i+1, j, board.length, board[0].length) == true && prev != "UP"){
+		if (dimensions(i+1, j, board.length, board[0].length) == true){
 			if (board[i+1][j] == word.charAt(pos[0])){
 				pos[0]++;
-				ans = solveRecur(board,word, pos, i+1, j, "DOWN");
+				ans = solveRecur(board,word, pos, i+1, j);
 			}
 		}
 
@@ -80,10 +81,10 @@ class Solution {
 		pos[0] = original;
 
 		//Try to the left
-		if (dimensions(i, j-1, board.length, board[0].length) == true && prev != "RIGHT"){
+		if (dimensions(i, j-1, board.length, board[0].length) == true){
 			if (board[i][j-1] == word.charAt(pos[0])){
 				pos[0]++;
-				ans = solveRecur(board,word, pos, i, j-1, "LEFT");
+				ans = solveRecur(board,word, pos, i, j-1);
 			}
 		}
 		if (ans == true){
