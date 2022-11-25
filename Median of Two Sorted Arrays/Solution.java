@@ -6,39 +6,32 @@ public class Solution {
 		int nums1[] = { 1, 3, 7, 10, 20 }, nums2[] = { 2, 5, 6 };
 		//1, 2, 3, 5, 6, 7, 10, 20
 		System.out.println(findMedianSortedArrays(nums1, nums2));
-
 		System.out.println(findMedianSortedArrays(new int[] { 1 }, (new int[] { 2 })));
 
 		System.out.println(findMedianSortedArrays(new int[] { 1, 5 }, (new int[] { 2 })));
-	}
-
 	// Complexity O(n+m)
+		System.out.println(findMedianSortedArrays(new int[] {1, 5}, (new int[] {2})));
+	}	
 	public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
-		double m1, m2;
-		if (nums1.length == 0 && nums2.length == 0) {
-			return 0;
+		int combined[] = new int[nums1.length + nums2.length];
+		int count1 = 0, count2 = 0;
+		for (int i = 0; i < combined.length; i++) {
+			if (count1 < nums1.length && count2 < nums2.length) { 
+				combined[i] = nums1[count1] < nums2[count2] ? nums1[count1++] : nums2[count2++];
+			}else if (count1 < nums1.length){
+				combined[i] = nums1[count1++];
+			}else{
+				combined[i] = nums2[count2++];
+			}
 		}
-		if (nums1.length == 1 && nums2.length == 1) {
-			return (double) (nums1[0] + nums2[0]) / 2;
-		}
-
-		m1 = getMedian(nums1);
-		m2 = getMedian(nums2);
-
-		if (m1 == m2){
-			return m1;
-		}else if (m1 > m2){
-			//Median lies in this range [m2, m1]
-
+		System.out.println(Arrays.toString(combined));
+		double ans;
+		if (combined.length % 2 == 0){
+			ans = (combined[combined.length / 2]  + combined[combined.length / 2 - 1]);
+			ans /= 2;
 		}else{
-			//Median lies in this range [m1, m2]
+			ans = combined[(combined.length - 1) / 2];
 		}
-		return 0;
-	}
-
-	private static double getMedian(int[] arr) {
-
-		return arr.length % 2 == 0 ? (double) (arr[arr.length / 2] + arr[arr.length / 2 - 1])
-				: arr[(arr.length - 1) / 2];
+		return ans;
 	}
 }
