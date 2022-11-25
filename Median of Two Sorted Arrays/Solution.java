@@ -9,7 +9,8 @@ public class Solution {
 		System.out.println(findMedianSortedArrays(new int[] {1}, (new int[] {2})));
 
 		System.out.println(findMedianSortedArrays(new int[] {1, 5}, (new int[] {2})));
-	}	
+	}
+	//Complexity O(n+m)
 	public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int combined[] = new int[nums1.length + nums2.length];
 		int count1 = 0, count2 = 0;
