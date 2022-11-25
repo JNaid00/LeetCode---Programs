@@ -9,30 +9,38 @@ public class Solution {
 		System.out.println(findMedianSortedArrays(new int[] { 1 }, (new int[] { 2 })));
 
 		System.out.println(findMedianSortedArrays(new int[] { 1, 5 }, (new int[] { 2 })));
-	
-		System.out.println(findMedianSortedArrays(new int[] {1, 5}, (new int[] {2})));
 	}	
 	// Complexity O(n+m)
 	public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
-		int combined[] = new int[nums1.length + nums2.length];
+		int combined = nums1.length + nums2.length;
 		int count1 = 0, count2 = 0;
-		for (int i = 0; i < combined.length; i++) {
+		double ans = 0, ans2 = 0;
+		if (combined % 2 == 1){
+			for (int i = 0; i <= combined / 2; i++) {
+				if (count1 < nums1.length && count2 < nums2.length) { 
+					ans = nums1[count1] < nums2[count2] ? nums1[count1++] : nums2[count2++];
+				}else if (count1 < nums1.length){
+					ans = nums1[count1++];
+				}else{
+					ans= nums2[count2++];
+				}
+			}
+
+			return ans;
+		}
+
+		for (int i = 0; i <= combined / 2; i++) {
+			ans2 = ans;
 			if (count1 < nums1.length && count2 < nums2.length) { 
-				combined[i] = nums1[count1] < nums2[count2] ? nums1[count1++] : nums2[count2++];
+				ans = nums1[count1] < nums2[count2] ? nums1[count1++] : nums2[count2++];
+
 			}else if (count1 < nums1.length){
-				combined[i] = nums1[count1++];
+				ans = nums1[count1++];
 			}else{
-				combined[i] = nums2[count2++];
+				ans= nums2[count2++];
 			}
 		}
-		System.out.println(Arrays.toString(combined));
-		double ans;
-		if (combined.length % 2 == 0){
-			ans = (combined[combined.length / 2]  + combined[combined.length / 2 - 1]);
-			ans /= 2;
-		}else{
-			ans = combined[(combined.length - 1) / 2];
-		}
-		return ans;
+
+		return (ans + ans2 )/2;
 	}
 }
