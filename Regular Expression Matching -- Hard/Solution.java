@@ -2,6 +2,7 @@ class Solution {
     public static void main(String[] args) {
         System.out.println(isMatch("aa", "a"));
         System.out.println(isMatch("aa", "a*"));
+        System.out.println(isMatch("aa", "c*a*"));
         System.out.println(isMatch("ab", ".*"));
         System.out.println(isMatch("aaaaaaaaaaaa", "a*"));
         System.out.println(isMatch("aaaaaaaaaaaasss", "a*"));
@@ -11,6 +12,7 @@ class Solution {
         System.out.println(isMatch("abczr", "abc."));
         System.out.println(isMatch("abczrrrrrrr", "abc.r*"));
         System.out.println(isMatch("abczrrrf", "abc.r*f"));
+        System.out.println(isMatch("abc", "z*.*"));
     }
 
     public static boolean isMatch(String s, String p) {
@@ -50,6 +52,10 @@ class Solution {
                 default: {
 
                     if (s.charAt(i) != p.charAt(count)) {
+                        if(count + 1 < p.length() && p.charAt(count + 1) == '*')
+                        {
+                            count++;
+                        }else
                         return false;
                     }
 
