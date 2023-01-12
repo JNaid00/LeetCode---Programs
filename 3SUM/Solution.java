@@ -1,8 +1,6 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.HashMap;
 
 class Solution {
     public static void main(String[] args) {
@@ -12,37 +10,27 @@ class Solution {
     }
 
     public static List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
         List<List<Integer>> ans = new ArrayList<List<Integer>>();
-        HashMap<String, String> exsists = new HashMap<String, String>();
         for (int i = 0; i < nums.length; i++) {
-            for (int j = i + 1; j < nums.length; j++) {
-                for (int j2 = j + 1; j2 < nums.length; j2++) {
-                    if (nums[i] + nums[j] + nums[j2] == 0) {
-                        int a = nums[i], b = nums[j], c = nums[j2];
-                        if (a > c) {
-                            int temp = a;
-                            a = c;
-                            c = temp;
-                        }
-
-                        if (a > b) {
-                            int temp = a;
-                            a = b;
-                            b = temp;
-                        }
-                        if (b > c) {
-                            int temp = b;
-                            b = c;
-                            c = temp;
-                        }
-                        if (exsists.containsKey(a + "," + b + "," + c) == false) {
-                            ans.add(Arrays.asList(a, b, c));
-                            exsists.put(a + "," + b + "," + c, "true");
-                        }
-
+            if (i > 0 && nums[i] == nums[i - 1])
+                continue;
+            int low = i + 1, high = nums.length - 1;
+            while (low < high) {
+                if (nums[low] + nums[high] == nums[i] * -1) {
+                    ans.add(Arrays.asList(nums[i], nums[low], nums[high]));
+                    low++;
+                    while (nums[low] == nums[low - 1] && low < high) {
+                        low++;
                     }
+                } else if (nums[low] + nums[high] > nums[i] * -1) {
+                    high--;
+                } else {
+                    low++;
                 }
+
             }
+
         }
 
         return ans;
