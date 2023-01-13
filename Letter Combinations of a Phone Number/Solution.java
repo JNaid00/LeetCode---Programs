@@ -3,18 +3,42 @@ import java.util.List;
 
 class Solution {
     public static void main(String[] args) {
-        System.out.println(letterCombinations("2").toString());
-        System.out.println(letterCombinations("9").toString());
-        System.out.println(letterCombinations("23").toString());
-        System.out.println(letterCombinations("234").toString());
-        System.out.println(letterCombinations("2345").toString());
+        System.out.println(letterCombinationsRecursive("2").toString());
+        System.out.println(letterCombinationsRecursive("9").toString());
+        System.out.println(letterCombinationsRecursive("23").toString());
+        System.out.println(letterCombinationsRecursive("234").toString());
+        System.out.println(letterCombinationsRecursive("2345").toString());
+    }
+
+    static String[] data = { "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+
+    public static List<String> letterCombinationsRecursive(String digits) {
+        List<String> ans = new ArrayList<>();
+        if (digits.length() == 0) {
+            return ans;
+        }
+        recursive(0, digits.length(), new StringBuilder(), ans, digits);
+
+        return ans;
+    }
+
+    private static void recursive(int pos, int length, StringBuilder sb, List<String> ans, String digits) {
+        if (pos == length)
+            ans.add(sb.toString());
+        else {
+            String characters = data[Character.getNumericValue(digits.charAt(pos)) - 1];
+            for (int i = 0; i < characters.length(); i++) {
+                recursive(pos + 1, length, new StringBuilder(sb).append(characters.substring(i, i + 1)), ans, digits);
+            }
+        }
+
     }
 
     public static List<String> letterCombinations(String digits) {
         List<String> ans = new ArrayList<>();
         if (digits.length() == 0)
             return ans;
-        String[] data = { "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+
         int firstIndex = (int) digits.charAt(0) - 49;
         for (int i = 0; i < data[firstIndex].length(); i++) {
             String temp = data[firstIndex].substring(i, i + 1);
