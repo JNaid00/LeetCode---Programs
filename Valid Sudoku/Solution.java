@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.HashSet;
 
 class Solution {
@@ -39,54 +40,78 @@ class Solution {
     }
 
     public static boolean isValidSudoku(char[][] board) {
-
-        for (int i = 0; i < 9;) {
-            int tempI = i;
-            for (int j = 0; j < 3; j++) {
-                int col = j * 3;
-                HashSet<Character> set = new HashSet<>();
-                for (int k = 0; k < 3; k++) {
-                    for (int k2 = 0 + col; k2 < 3 + col; k2++) {
-                        // System.out.println("(" + i + "," + k2 + ")");
-                        if (board[i][k2] != '.' && set.contains(board[i][k2])) {
-                            return false;
-                        } else {
-                            set.add(board[i][k2]);
-                        }
+        HashMap<Integer, HashSet<Character>> rows = new HashMap<Integer, HashSet<Character>>();
+        HashMap<Integer, HashSet<Character>> cols = new HashMap<Integer, HashSet<Character>>();
+        HashMap<String, HashSet<Character>> square = new HashMap<String, HashSet<Character>>();
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                String pair = (int) Math.floor(i / 3) + "," + (int) Math.floor(j / 3);
+                square.put(pair, new HashSet<>());
+            }
+            rows.put(i, new HashSet<>());
+            cols.put(i, new HashSet<>());
+        }
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j] != '.') {
+                    String pair = (int) Math.floor(i / 3) + "," + (int) Math.floor(j / 3);
+                    if (rows.get(i).contains(board[i][j]) || cols.get(j).contains(board[i][j])
+                            || square.get(pair).contains(board[i][j])) {
+                        return false;
                     }
-                    i++;
+                    square.get(pair).add(board[i][j]);
+                    rows.get(i).add(board[i][j]);
+                    cols.get(j).add(board[i][j]);
                 }
-                i = tempI;
             }
+        }
+        // for (int i = 0; i < 9;) {
+        // int tempI = i;
+        // for (int j = 0; j < 3; j++) {
+        // int col = j * 3;
+        // HashSet<Character> set = new HashSet<>();
+        // for (int k = 0; k < 3; k++) {
+        // for (int k2 = 0 + col; k2 < 3 + col; k2++) {
+        // // System.out.println("(" + i + "," + k2 + ")");
+        // if (board[i][k2] != '.' && set.contains(board[i][k2])) {
+        // return false;
+        // } else {
+        // set.add(board[i][k2]);
+        // }
+        // }
+        // i++;
+        // }
+        // i = tempI;
+        // }
 
-            i += 3;
-        }
+        // i += 3;
+        // }
 
-        for (int i = 0; i < board.length; i++) {
-            HashSet<Character> set = new HashSet<>();
-            for (int j = 0; j < board.length; j++) {
-                // System.out.print("(" + i + "," + j + ")");
-                if (board[i][j] != '.' && set.contains(board[i][j])) {
-                    return false;
-                } else {
-                    set.add(board[i][j]);
-                }
-            }
-            // System.out.println();
-        }
-        // System.out.println();
-        for (int i = 0; i < board.length; i++) {
-            HashSet<Character> set = new HashSet<>();
-            for (int j = 0; j < board.length; j++) {
-                // System.out.print("(" + j + "," + i + ")");
-                if (board[j][i] != '.' && set.contains(board[j][i])) {
-                    return false;
-                } else {
-                    set.add(board[j][i]);
-                }
-            }
-            // System.out.println();
-        }
+        // for (int i = 0; i < board.length; i++) {
+        // HashSet<Character> set = new HashSet<>();
+        // for (int j = 0; j < board.length; j++) {
+        // // System.out.print("(" + i + "," + j + ")");
+        // if (board[i][j] != '.' && set.contains(board[i][j])) {
+        // return false;
+        // } else {
+        // set.add(board[i][j]);
+        // }
+        // }
+        // // System.out.println();
+        // }
+        // // System.out.println();
+        // for (int i = 0; i < board.length; i++) {
+        // HashSet<Character> set = new HashSet<>();
+        // for (int j = 0; j < board.length; j++) {
+        // // System.out.print("(" + j + "," + i + ")");
+        // if (board[j][i] != '.' && set.contains(board[j][i])) {
+        // return false;
+        // } else {
+        // set.add(board[j][i]);
+        // }
+        // }
+        // // System.out.println();
+        // }
 
         return true;
     }
