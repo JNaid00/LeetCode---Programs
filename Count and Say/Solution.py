@@ -9,7 +9,8 @@ class Solution(object):
     def recursive(self,start, n, ans):
         if (n == start):
             return ans
-        strans = str(ans)
+        strans = str(ans)  
+        
         output = ""
         i = 0
         while i < len(strans):
