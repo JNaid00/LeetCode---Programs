@@ -6,6 +6,7 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         ans = []
+        #Base Case
         if len(nums) == 1:
             return [nums.copy()]
         for i in range(len(nums)):
