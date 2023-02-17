@@ -5,20 +5,21 @@ class Solution(object):
         :type matrix: List[List[int]]
         :rtype: None Do not return anything, modify matrix in-place instead.
         """
-        col = len(matrix) - 1
         
-        ans  = [ [0]*len(matrix) for i in range(len(matrix))]
-        for i in range(len(matrix)):
-            row = 0
-            for j in range(len(matrix)):
-                ans[row][col] = matrix[i][j]
+        l, r = 0, len(matrix) - 1
+        while l < r:
+            for i in range(l, r):
+                t, b = l, r
+                temp = matrix[t][l + i]
+                matrix[t][l+ i] = matrix[b - i][l]
+                matrix[b - i][l] = matrix[b][r - i]
+                matrix[b][r - i] = matrix[t + i][r]
+                matrix[t + i][r] = temp
                 
-                row += 1
-            col -= 1
-        for i in range(len(matrix)):
-            row = 0
-            for j in range(len(matrix)):
-                matrix[i][j] = ans[i][j]
+            l += 1
+            r -= 1
+                
+            
 
 
 
