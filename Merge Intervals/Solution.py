@@ -4,21 +4,17 @@ class Solution(object):
         :type intervals: List[List[int]]
         :rtype: List[List[int]]
         """
-        length = len(intervals)
-        for item in intervals:
-            lower, upper = item[0], item[1]
-            nextCounter = intervals.index(item) + 1
-            for j in range(intervals.index(item) + 1, length):
-                temp = intervals[nextCounter]
-                nextLower, nextUpper = temp[0], temp[1]
-                if nextLower <= upper:
-                    item[1] = nextUpper if nextUpper > upper else upper
-                    upper = item[1]
-                    intervals.remove(temp)
-                    length -= 1
-                else:
-                    nextCounter += 1
-        return intervals
+        # O(nlog(n))
+        intervals.sort(key = lambda i : i[0])
+        output = [intervals[0]]
+        counter = 0
+        for lower, upper in intervals[1:]:
+            if lower <= output[-1][1]: 
+                output[-1][1] = max(upper, output[-1][1])
+            else:
+                output.append([lower,upper])
+
+        return output
 
 sol = Solution()
 print(sol.merge([[1,3],[2,6],[8,10],[15,18]]))
