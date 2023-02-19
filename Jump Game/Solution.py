@@ -5,17 +5,13 @@ class Solution(object):
         :type nums: List[int]
         :rtype: bool
         """
-        max = len(nums) - 1
-        index = 0
-        for i in range(len(nums)):
-            curr = nums[i]
-            index= i + curr
-            while(index < max):
-                curr = nums[index]
-                if curr == 0: break
-                index += curr
-            if index == max:
-                return True
+        goal = len(nums) - 1
+        for i in range(len(nums) - 1,-1, -1):
+            numsI = nums[i]
+            if i + nums[i] >= goal:
+                goal = i
+        
+        if goal == 0: return True
         return False
 
 sol = Solution()
